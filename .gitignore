@@ -136,6 +136,7 @@ $RECYCLE.BIN/
 *.sql
 *.rdb
 *.db
+*.sqlite3
 
 # misc
 *.dat
