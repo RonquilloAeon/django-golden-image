@@ -3,7 +3,6 @@ from django.db import models
 from django.utils import timezone
 
 
-# Create your models here.
 class UserCustomManager(BaseUserManager):
     def _create_user(self, email, password, is_superuser, **extra_fields):
         now = timezone.now()

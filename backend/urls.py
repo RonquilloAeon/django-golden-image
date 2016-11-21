@@ -13,9 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from apps.account import views as account_views
 from django.conf.urls import url
 from django.contrib import admin
+from rest_framework import routers
+
+router = routers.DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
+    # Sample
+    url(r'api/sample_tasks', account_views.SampleTasksViewSet.as_view()),
     url(r'^admin/', admin.site.urls),
 ]

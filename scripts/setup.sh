@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Setting up '$1'"
+ls
 
 if [ "$1" == "dev" ]; then
     cat > backend/settings/project_config.py <<'EOF'

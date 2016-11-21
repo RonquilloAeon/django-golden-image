@@ -87,6 +87,16 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+# Celery settings
+
+BROKER_URL = 'redis://localhost:6379/0'
+
+CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+
+CELERY_TIMEZONE = 'America/Boise'
+
 # Communication
 
 EMAIL_BACKEND = EMAIL['EMAIL_BACKEND']
