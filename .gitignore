@@ -44,17 +44,13 @@ coverage.xml
 *.mo
 *.pot
 
-# Django/Monky Trends stuff:
+# Django/Project stuff:
 celery.py
 *.log
-mt_conf.py
-monkytrends_config.py
-replypro_config.py
-manage.py
-wsgi.py
 *.pdf
 *.csv
 *.txt
+project_config.py
 !requirements.txt
 *.dir
 *.bak

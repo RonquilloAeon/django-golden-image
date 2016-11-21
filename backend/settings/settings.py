@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
+from backend.settings.project_config import DATABASES, DEBUG, EMAIL
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&ovy=!!3@8s@68950+td&##!n!=(&vh_at@j71kti&pu^@2k%_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG
 
 INTERNAL_IPS = ('127.0.0.1', )
 
@@ -88,25 +89,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Communication
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = ''
-EMAIL_PORT = 587
-EMAIL_HOST_PASSWORD = ''
-EMAIL_HOST_USER = ''
-DEFAULT_FROM_EMAIL = ''
-SERVER_EMAIL = ''
+EMAIL_BACKEND = EMAIL['EMAIL_BACKEND']
+EMAIL_USE_TLS = EMAIL['EMAIL_USE_TLS']
+EMAIL_HOST = EMAIL['EMAIL_HOST']
+EMAIL_PORT = EMAIL['EMAIL_PORT']
+EMAIL_HOST_PASSWORD = EMAIL['EMAIL_HOST_PASSWORD']
+EMAIL_HOST_USER = EMAIL['EMAIL_HOST_USER']
+DEFAULT_FROM_EMAIL = EMAIL['DEFAULT_FROM_EMAIL']
+SERVER_EMAIL = EMAIL['SERVER_EMAIL']
 
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = DATABASES
 
 
 # Password validation

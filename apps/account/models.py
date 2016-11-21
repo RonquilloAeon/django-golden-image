@@ -5,7 +5,7 @@ from django.utils import timezone
 
 # Create your models here.
 class UserCustomManager(BaseUserManager):
-    def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
+    def _create_user(self, email, password, is_superuser, **extra_fields):
         now = timezone.now()
 
         if not email:
@@ -13,7 +13,6 @@ class UserCustomManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(email=email,
-                          is_staff=is_staff,
                           is_superuser=is_superuser,
                           last_login=now, **extra_fields)
         user.set_password(password)
@@ -21,10 +20,10 @@ class UserCustomManager(BaseUserManager):
         return user
 
     def create_user(self, email, password=None, **extra_fields):
-        return self._create_user(email, password, False, False, **extra_fields)
+        return self._create_user(email, password, False, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
-        return self._create_user(email, password, True, True, **extra_fields)
+        return self._create_user(email, password, True, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
