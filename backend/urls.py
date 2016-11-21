@@ -21,7 +21,14 @@ from rest_framework import routers
 router = routers.DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
+    # account
+    url(r'api/auth$', account_views.AuthenticateViewSet.as_view()),
+    url(r'api/auth/social$', account_views.SocialSignUpViewSet.as_view()),
+    url(r'api/me$', account_views.MeViewSet.as_view()),
+    url(r'api/users$', account_views.UserViewSet.as_view()),
+
     # Sample
     url(r'api/sample_tasks', account_views.SampleTasksViewSet.as_view()),
+
     url(r'^admin/', admin.site.urls),
 ]

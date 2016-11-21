@@ -1,6 +1,5 @@
 #!/bin/bash
 echo "Setting up '$1'"
-ls
 
 if [ "$1" == "dev" ]; then
     cat > backend/settings/project_config.py <<'EOF'
@@ -27,6 +26,8 @@ EMAIL['EMAIL_HOST_PASSWORD'] = ''
 EMAIL['EMAIL_HOST_USER'] = ''
 EMAIL['DEFAULT_FROM_EMAIL'] = ''
 EMAIL['SERVER_EMAIL'] = ''
+
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
 EOF
 elif [ "$1" == "staging" ]; then
     cat > backend/settings/project_config.py <<'EOF'
@@ -53,6 +54,8 @@ EMAIL['EMAIL_HOST_PASSWORD'] = ''
 EMAIL['EMAIL_HOST_USER'] = ''
 EMAIL['DEFAULT_FROM_EMAIL'] = ''
 EMAIL['SERVER_EMAIL'] = ''
+
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
 EOF
 elif [ "$1" == "production" ]; then
     cat > backend/settings/project_config.py <<'EOF'
@@ -79,6 +82,8 @@ EMAIL['EMAIL_HOST_PASSWORD'] = ''
 EMAIL['EMAIL_HOST_USER'] = ''
 EMAIL['DEFAULT_FROM_EMAIL'] = ''
 EMAIL['SERVER_EMAIL'] = ''
+
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
 EOF
 else
     echo "No environment specified [dev|staging|production]"

@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 import copy
 
@@ -72,3 +73,9 @@ def get_default_response(status_code):
         return Response(data=copy.copy(RESPONSES[status_code]), status=copy.copy(STATUS_CODES[status_code]))
     else:
         raise NameError('The status code {} not supported.'.format(status_code))
+
+
+class LargeResultsSetPagination(PageNumberPagination):
+    page_size = 1000
+    page_size_query_param = 'page_size'
+    max_page_size = 10000

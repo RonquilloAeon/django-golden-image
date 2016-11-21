@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
-from backend.settings.project_config import DATABASES, DEBUG, EMAIL
+from backend.settings.project_config import DATABASES, DEBUG, EMAIL, SOCIAL_AUTH_FACEBOOK_SECRET
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -86,6 +86,16 @@ AUTHENTICATION_BACKENDS = (
 )
 
 WSGI_APPLICATION = 'backend.wsgi.application'
+
+# Social auth
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email',
+}
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_FACEBOOK_SECRET = SOCIAL_AUTH_FACEBOOK_SECRET
 
 # Celery settings
 
