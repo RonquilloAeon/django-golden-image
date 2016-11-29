@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from apps.account import views as account_views
-from django.conf.urls import url
+from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework import routers
 
@@ -30,5 +30,6 @@ urlpatterns = [
     # Sample
     url(r'api/sample_tasks', account_views.SampleTasksViewSet.as_view()),
 
+    url(r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
     url(r'^admin/', admin.site.urls),
 ]
