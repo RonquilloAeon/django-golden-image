@@ -31,14 +31,16 @@ SOCIAL_AUTH_FACEBOOK_SECRET = ''
 EOF
 elif [ "$1" == "staging" ]; then
     cat > backend/settings/project_config.py <<'EOF'
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gdb',
-        'USER': 'djangostaging',
-        'PASSWORD': 'golden',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -59,14 +61,16 @@ SOCIAL_AUTH_FACEBOOK_SECRET = ''
 EOF
 elif [ "$1" == "production" ]; then
     cat > backend/settings/project_config.py <<'EOF'
+import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '5432',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 

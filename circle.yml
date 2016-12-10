@@ -1,0 +1,12 @@
+machine
+  python:
+    version: 3.5.2
+  services:
+    - postgresql
+  environment:
+    DB_NAME: circleci
+    DB_USER: ubuntu
+  dependencies:
+    post
+      - pip install -r requirements.txt
+      - ./scripts/setup.sh production
