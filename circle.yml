@@ -8,5 +8,4 @@ machine:
     DB_USER: ubuntu
 dependencies:
   post:
-    - pip install -r requirements.txt
     - ./scripts/setup.sh production
