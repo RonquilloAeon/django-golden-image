@@ -15,7 +15,6 @@ sudo apt-get build-dep python-imaging -y > /dev/null 2>&1
 
 # Set up virtual environment and env variables
 mkdir virtualenvs
-sudo chown vagrant:vagrant virtualenvs
 sudo pip3 install virtualenv virtualenvwrapper > /dev/null 2>&1
 printf "\n\n# Virtualenv settings\n" >> ~vagrant/.bash_profile
 printf "export WORKON_HOME=~vagrant/virtualenvs\n" >> ~vagrant/.bash_profile
@@ -40,3 +39,6 @@ workon backend
 pip install -r requirements.txt
 ./scripts/setup.sh dev > /dev/null
 ./manage.py migrate
+
+# Set virtualenvs owner
+sudo chown -R vagrant:vagrant ~vagrant/virtualenvs
