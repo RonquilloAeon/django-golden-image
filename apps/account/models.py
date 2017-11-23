@@ -35,12 +35,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name_plural = "Users"
 
-    def __str__(self):
-        return self.email
-
     def get_short_name(self):
         return self.email
 
     @property
     def is_staff(self):
-        return self.is_superuser
+        return self.is_admin
+
+    def __str__(self):
+        return self.email

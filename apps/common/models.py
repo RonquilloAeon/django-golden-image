@@ -25,4 +25,8 @@ def get_uploaded_file_path(instance, filename):
     # Seconds since epoch
     current_time = str(round(time.time(), 0)).split('.')[0]
 
-    return 'images/{}_{}'.format(current_time, filename)
+    # Get file extension
+    file_pieces = filename.split('.')
+    file_extension = file_pieces[len(file_pieces) - 1]
+
+    return 'images/{}.{}'.format(current_time, file_extension)

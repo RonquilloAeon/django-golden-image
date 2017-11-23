@@ -1,14 +1,13 @@
 from apps.account import models as account_models
 from apps.common.test import helpers as test_helpers
-from django.test import TestCase
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class TestMeViewSetGET(TestCase):
+class TestGET(APITestCase):
     """
     Test /api/me
     """
-    def test_me_view_set_get_successful(self):
+    def test_get_successful(self):
         """
         Successful /api/me GET
 
@@ -21,10 +20,9 @@ class TestMeViewSetGET(TestCase):
         token = test_helpers.get_token_for_user(user)
 
         # Get data from endpoint
-        client = APIClient()
-        client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
 
-        request = client.get('/api/me')
+        request = self.client.get('/api/me')
         result = request.data['result']
 
         self.assertEquals(result['email'], user.email)
