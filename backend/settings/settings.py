@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
-from backend.settings.project_config import DATABASES, DEBUG, EMAIL, SOCIAL_AUTH_FACEBOOK_SECRET
+from backend.settings.project_config import *
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,7 +26,7 @@ SECRET_KEY = '&ovy=!!3@8s@68950+td&##!n!=(&vh_at@j71kti&pu^@2k%_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEBUG
 
-INTERNAL_IPS = ('127.0.0.1', )
+INTERNAL_IPS = ('127.0.0.1', '10.0.2.2',)
 
 ALLOWED_HOSTS = ['*']
 
@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'grappelli',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,11 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'apps.account',
-    'dbmail',
-    'guardian',
     'rest_framework',
     'rest_framework.authtoken',
-    'social.apps.django_app.default',
+    'debug_toolbar',
 ]
 
 SITE_ID = 1
@@ -60,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -81,32 +80,24 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.facebook.Facebook2OAuth2',
     'django.contrib.auth.backends.ModelBackend',
-    'guardian.backends.ObjectPermissionBackend',
 )
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# Social auth
 
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id,name,email',
-}
+# Django jet
 
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+JET_SIDE_MENU_COMPACT = True
 
-SOCIAL_AUTH_FACEBOOK_SECRET = SOCIAL_AUTH_FACEBOOK_SECRET
+# Add custom apps and models here
+# https://jet.readthedocs.io/en/latest/config_file.html#custom-menu
+JET_SIDE_MENU_CUSTOM_APPS = [
+    ('account', ['__all__']),
+    ('authtoken', ['__all__']),
+    ('auth', ['__all__']),
+]
 
-# Celery settings
-
-BROKER_URL = 'redis://localhost:6379/0'
-
-CELERY_ACCEPT_CONTENT = ['json', 'pickle']
-
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
-
-CELERY_TIMEZONE = 'America/Boise'
 
 # Communication
 
@@ -117,7 +108,7 @@ EMAIL_PORT = EMAIL['EMAIL_PORT']
 EMAIL_HOST_PASSWORD = EMAIL['EMAIL_HOST_PASSWORD']
 EMAIL_HOST_USER = EMAIL['EMAIL_HOST_USER']
 DEFAULT_FROM_EMAIL = EMAIL['DEFAULT_FROM_EMAIL']
-SERVER_EMAIL = EMAIL['SERVER_EMAIL']
+SERVER_EMAIL = EMAIL['EMAIL_HOST_USER']
 
 
 # Database
@@ -159,7 +150,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Django REST Framework
+# Django REST Framework / API
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

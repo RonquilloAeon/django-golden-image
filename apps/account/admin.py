@@ -1,7 +1,6 @@
 from apps.account import models
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from guardian import models as guardian
 
 
 class UserAdmin(BaseUserAdmin):
@@ -30,4 +29,3 @@ class UserObjectPermissionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.User, UserAdmin)
-admin.site.register(guardian.UserObjectPermission, UserObjectPermissionAdmin)

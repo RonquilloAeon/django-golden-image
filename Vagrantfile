@@ -7,8 +7,12 @@
 # https://www.sitepoint.com/vagrantfile-explained-setting-provisioning-shell/
 # http://kvz.io/blog/2013/01/16/vagrant-tip-keep-virtualbox-guest-additions-in-sync/
 Vagrant.configure("2") do |config|
-  # Every Vagrant development environment requires a box.
-  config.vm.box = "ubuntu/trusty64"
+  # Environment setup
+  config.vm.box = "ubuntu/xenial64"
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+  end
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine.
