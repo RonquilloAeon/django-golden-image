@@ -31,6 +31,9 @@ printf "alias test='python manage.py test'\n" >> ~ubuntu/.bash_profile
 printf "alias coveragetest='coverage run --source='apps' manage.py test'\n" >> ~ubuntu/.bash_profile
 source ~ubuntu/.bash_profile > /dev/null
 
+# Remove packages
+sudo apt-get remove git -y > /dev/null
+
 # Create virtualenv
 mkvirtualenv --python=python3.5 backend > /dev/null
 
