@@ -4,13 +4,13 @@ echo "Installing packages..."
 
 # Python 3.5 setup
 sudo apt-get install --reinstall software-properties-common -y > /dev/null
-echo | sudo add-apt-repository ppa:fkrull/deadsnakes > /dev/null
+echo | sudo add-apt-repository ppa:deadsnakes/ppa > /dev/null
 sudo apt-get update > /dev/null
-sudo apt-get install python3.5 -y > /dev/null
+sudo apt-get install python3.6 -y
 
 # Install packages
-sudo apt-get install python3-pip python3.5-dev libffi-dev libpq-dev \
-python-virtualenv libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev build-essential -y > /dev/null
+sudo apt-get install python3-pip python3.6-dev libffi-dev libpq-dev \
+python-virtualenv libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev build-essential -y
 
 sudo apt-get install postgresql postgresql-contrib -y > /dev/null
 sudo apt-get build-dep python-imaging -y > /dev/null
@@ -35,7 +35,7 @@ source ~ubuntu/.bash_profile > /dev/null
 sudo apt-get remove git -y > /dev/null
 
 # Create virtualenv
-mkvirtualenv --python=python3.5 backend > /dev/null
+mkvirtualenv --python=python3.6 backend
 
 # Set up db
 sudo -u postgres bash -c "psql -c \"CREATE USER djangodev WITH PASSWORD 'golden';\""

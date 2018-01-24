@@ -1,6 +1,5 @@
 from apps.account import serializers
 from django.contrib.auth import authenticate
-from django.db.utils import IntegrityError
 from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
