@@ -40,7 +40,7 @@ class TestPOST(APITestCase):
 
         request = self.client.post('/api/users', data=payload, format='json')
 
-        self.assertEquals(request.status_code, 401)
+        self.assertEquals(request.status_code, 400)
 
     def test_post_bad_request(self):
         """
@@ -50,4 +50,4 @@ class TestPOST(APITestCase):
         # Attempt to create user via API with invalid payload
         request = self.client.post('/api/users', data={'email': 'bad@test.com'}, format='json')
 
-        self.assertEquals(request.status_code, 401)
+        self.assertEquals(request.status_code, 400)

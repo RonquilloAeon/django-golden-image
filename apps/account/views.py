@@ -88,4 +88,4 @@ class UsersView(generics.CreateAPIView):
             user = serializer.create(serializer.validated_data)
             return Response(data=serializers.UserSerializer(user).data, status=status.HTTP_201_CREATED)
         else:
-            return Response(data=serializer.errors, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
