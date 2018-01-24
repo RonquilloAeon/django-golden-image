@@ -13,13 +13,13 @@ class UserAdmin(BaseUserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password', 'last_login',)}),
-        # ('Personal info', {'fields': ('',)}),
-        ('Permissions', {'fields': ('groups', 'is_superuser', 'user_permissions',)}),
+        ('Permissions', {'fields': ('groups', 'is_admin', 'is_superuser', 'user_permissions',)}),
     )
 
     list_display = ('email', 'is_superuser', 'last_login', 'id',)
     list_filter = ('email', 'is_superuser',)
     ordering = ('email',)
+    readonly_fields = ('last_login',)
     search_fields = ('email',)
 
 

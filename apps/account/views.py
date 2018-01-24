@@ -1,40 +1,31 @@
-from apps.account import models as account_models
 from apps.account import serializers
-from apps.common.views import get_default_response
 from django.contrib.auth import authenticate
 from django.db.utils import IntegrityError
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import AuthenticationFailed, ParseError
+from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-class AuthenticateViewSet(APIView):
+class AuthenticateView(APIView):
     """
     /api/auth
     """
+    authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.AllowAny,)
-    queryset = account_models.User.objects.all()
-    serializer_class = serializers.UserSerializer
 
     def delete(self, request):
         """
         Delete token to log user out
-
         :param request: Request object
         :return: Response object
         """
-        response = get_default_response('200')
+        if not request.user.is_anonymous:
+            Token.objects.filter(user=request.user).delete()
 
-        try:
-            authenticated_token = TokenAuthentication().authenticate(request)[1]
-            authenticated_token.delete()
-        except TypeError:
-            response = get_default_response('401')
-            response.data['message'] = 'User not logged in'
-            response.data['userMessage'] = 'Cannot log out you - you are not logged in!'
-
-        return response
+        return Response(status=status.HTTP_200_OK)
 
     def post(self, request):
         """
@@ -45,88 +36,56 @@ class AuthenticateViewSet(APIView):
         payload = request.data
         email = payload.get('email')
         password = payload.get('password')
-        response = get_default_response('400')
 
         if email and password:
             user = authenticate(email=email, password=password)
 
             if user:
-                # User exists and is active, get/create token and return
-                if user.is_active:
-                    token = Token.objects.get_or_create(user=user)
-                    response = get_default_response('201')
-                    response.data['token'] = token[0].key
-                else:
-                    response = get_default_response('403')
-                    response.data['message'] = 'User inactive'
-                    response.data['userMessage'] = 'Cannot log you in because your user is inactive'
+                token = Token.objects.get_or_create(user=user)
+                return Response(data={'token': token[0].key}, status=status.HTTP_201_CREATED)
             else:
-                response = get_default_response('401')
-                response.data['message'] = 'Authentication failed'
-                response.data['userMessage'] = 'Email or password incorrect. Please try again.'
-
-        return response
+                raise AuthenticationFailed('Email or password incorrect. Please try again.')
+        else:
+            raise ParseError('email and password fields required')
 
 
-class MeViewSet(generics.RetrieveAPIView):
+class MeView(APIView):
     """
     /api/me
     Endpoint for retrieving user info
     """
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated,)
-    queryset = account_models.User.objects.all()
 
     def get(self, request):
         """
         Get user
-
         :param request: Request object
         :return: Response object
         """
-        authenticated_user = TokenAuthentication().authenticate(request)[0]
-
-        response = get_default_response('200')
-        response.data['userMessage'] = 'Successfully retrieved your user information!'
-        response.data['result'] = serializers.UserSerializer(authenticated_user).data
-
-        return response
+        return Response(data=serializers.UserSerializer(request.user).data, status=status.HTTP_200_OK)
 
 
-class UserViewSet(generics.CreateAPIView):
+class UsersView(generics.CreateAPIView):
     """
-    /api/user
+    /api/users
     Endpoint class for User model
     """
     permission_classes = (permissions.AllowAny,)
-    queryset = account_models.User.objects.all()
     serializer_class = serializers.UserSerializer
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         """
         Create a new user
-
         :param request: Request object
+        :param kwargs:
         :return: Response object
         """
         payload = request.data
-        email = payload.get('email')
-        password = payload.get('password')
-        request = get_default_response('400')
+        serializer = serializers.UserCreateSerializer(data=payload)
 
-        if email and password:
-            try:
-                user = account_models.User.objects.create_user(email, password)
-
-                if user:
-                    request = get_default_response('201')
-                    request.data['message'] = 'User successfully created'
-                    request.data['userMessage'] = 'You have been successfully registered!'
-                    request.data['result'] = serializers.UserSerializer(user).data
-            except IntegrityError:
-                request = get_default_response('409')
-                request.data['message'] = 'User already exists'
-                request.data['userMessage'] = 'A user with the same email already exists. If you forgot your ' \
-                                              'password, you can reset it using the Reset form.'
-
-        return request
+        if serializer.is_valid():
+            user = serializer.create(serializer.validated_data)
+            return Response(data=serializers.UserSerializer(user).data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_401_UNAUTHORIZED)

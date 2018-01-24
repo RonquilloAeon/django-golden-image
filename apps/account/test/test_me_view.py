@@ -10,8 +10,7 @@ class TestGET(APITestCase):
     def test_get_successful(self):
         """
         Successful /api/me GET
-
-        :return:
+        :return: None
         """
         # Create data
         user = account_models.User.objects.create_user(email='test@test.com')
@@ -23,6 +22,6 @@ class TestGET(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
 
         request = self.client.get('/api/me')
-        result = request.data['result']
+        result = request.data
 
         self.assertEquals(result['email'], user.email)

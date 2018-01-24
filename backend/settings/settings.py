@@ -30,6 +30,12 @@ INTERNAL_IPS = ('127.0.0.1', '10.0.2.2',)
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ORIGIN_WHITELIST = (
+    'localhost:9090',  # Add staging and production domains here as well
+)
+
+CORS_URLS_REGEX = r'^/api/.*$'
+
 
 # Application definition
 
@@ -43,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'apps.account',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'debug_toolbar',
@@ -153,14 +160,13 @@ USE_TZ = True
 # Django REST Framework / API
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'apps.common.views.ComprehensivePageNumberPagination',
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
-    'PAGE_SIZE': 30,
+    'PAGE_SIZE': 12,
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Static files (CSS, JavaScript, Images)

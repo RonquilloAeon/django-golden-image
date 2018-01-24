@@ -27,20 +27,22 @@ class UserCustomManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False, verbose_name='is admin')
     username = models.CharField(max_length=255, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     objects = UserCustomManager()
 
     class Meta:
-        verbose_name_plural = "Users"
+        verbose_name_plural = 'Users'
 
     def get_short_name(self):
         return self.email
 
     @property
     def is_staff(self):
-        return self.is_superuser
+        return self.is_admin
 
     def __str__(self):
         return self.email
