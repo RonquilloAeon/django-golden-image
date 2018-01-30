@@ -14,7 +14,7 @@ class EditMixin(models.Model):
         abstract = True
 
 
-class HashidManagerMixin(models.Manager):
+class HashidManagerMixin(object):
     def get_by_hashid(self, hashid):
         """
         Get an object by a hashed pk

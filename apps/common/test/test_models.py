@@ -1,6 +1,7 @@
 from apps.account.models import User
 from apps.common.hasher import get_hasher
 from apps.common.models import get_uploaded_file_path, HashidManagerMixin
+from django.db import models
 from django.test import TestCase
 
 
@@ -17,7 +18,7 @@ class TestGetUploadedFilePath(TestCase):
         self.assertRegex(path, '^images\/\d+\.\w{3,4}$')
 
 
-class UserManager(HashidManagerMixin):
+class UserManager(models.Manager, HashidManagerMixin):
     pass
 
 
