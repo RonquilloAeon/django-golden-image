@@ -1,3 +1,4 @@
+from apps.common.hasher import get_hasher
 from django.db import models
 import time
 
@@ -5,7 +6,6 @@ import time
 class EditMixin(models.Model):
     """
     Abstract class for use in models
-
     """
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -14,10 +14,21 @@ class EditMixin(models.Model):
         abstract = True
 
 
+class HashidManagerMixin(models.Manager):
+    def get_by_hashid(self, hashid):
+        """
+        Get an object by a hashed pk
+        :param hashid: hashed pk value
+        :return: None
+        """
+        hasher = get_hasher()
+
+        return self.get(pk=hasher.decode_single(hashid))
+
+
 def get_uploaded_file_path(instance, filename):
     """
     Function that determines file path for specified file
-
     :param instance: instance of db object for which file is being saved
     :param filename: name of file
     :return: path to file
