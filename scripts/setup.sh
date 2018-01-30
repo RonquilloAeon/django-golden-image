@@ -27,6 +27,8 @@ EMAIL['EMAIL_HOST_PASSWORD'] = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL['EMAIL_HOST_USER'] = os.environ.get('EMAIL_HOST_USER')
 EMAIL['DEFAULT_FROM_EMAIL'] = os.environ.get('DEFAULT_FROM_EMAIL')
 
+HASH_SALT = 'sei39su3sind8ien4hqn'
+
 # Simpler hasher to speed up testing
 # For DEV/TESTING only
 PASSWORD_HASHERS = (
@@ -58,6 +60,9 @@ EMAIL['EMAIL_PORT'] = 587
 EMAIL['EMAIL_HOST_PASSWORD'] = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL['EMAIL_HOST_USER'] = os.environ.get('EMAIL_HOST_USER')
 EMAIL['DEFAULT_FROM_EMAIL'] = os.environ.get('DEFAULT_FROM_EMAIL')
+
+# SECURITY WARNING: CHANGE FOR PRODUCTION
+HASH_SALT = '94nethn49thpbs3e93nhu6'
 EOF
 else
     echo "No environment specified [dev|production]"
