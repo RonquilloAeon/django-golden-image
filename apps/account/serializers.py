@@ -1,11 +1,11 @@
 from apps.account import models as account_models
-from rest_framework import serializers
+from apps.common.serializers import HashidModelSerializer
 
 
-class UserCreateSerializer(serializers.ModelSerializer):
+class UserCreateSerializer(HashidModelSerializer):
     class Meta:
         model = account_models.User
-        fields = ('id', 'email', 'password',)
+        fields = ('pk', 'email', 'password',)
 
     def create(self, validated_data):
         email = validated_data['email']
@@ -17,7 +17,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         return account_models.User.objects.create_user(email, password, **validated_data)
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(HashidModelSerializer):
     class Meta:
         model = account_models.User
-        fields = ('id', 'email', 'last_login',)
+        fields = ('pk', 'email', 'last_login',)

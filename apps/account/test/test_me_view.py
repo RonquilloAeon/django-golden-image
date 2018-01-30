@@ -24,4 +24,7 @@ class TestGET(APITestCase):
         request = self.client.get('/api/me')
         result = request.data
 
+        self.assertEquals(len(result.values()), 3)
         self.assertEquals(result['email'], user.email)
+        self.assertIn('pk', result)
+        self.assertNotIn('id', result)
