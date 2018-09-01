@@ -49,7 +49,6 @@ coverage.xml
 *.pdf
 *.csv
 *.txt
-project_config.py
 !requirements.txt
 *.dir
 *.bak
@@ -64,7 +63,6 @@ target/
 
 # IDEA editor config directory
 # vim as well
-.idea/
 *~
 *.sw[op]
 *.iml
@@ -135,10 +133,3 @@ $RECYCLE.BIN/
 
 # misc
 *.dat
-
-# Node
-node_modules
-bower_components
-
-# Vagrant
-.vagrant/
