@@ -1,0 +1,28 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./
+    command: ./start.dev.sh
+    container_name: 'dgi_backend'
+    env_file: ./backend/dev.env
+    networks:
+      - default
+    ports:
+      - "8000:8000"
+    restart: always
+    volumes:
+      - ./src:/app
+
+  db:
+    container_name: 'dgi_db'
+    environment:
+      - POSTGRES_USER=developer
+      - POSTGRES_PASSWORD=passpass
+      - POSTGRES_DB=goldendb
+    image: kartoza/postgis:9.6-2.4
+    networks:
+      - default
+    ports:
+      - "5432:5432"
+    restart: always

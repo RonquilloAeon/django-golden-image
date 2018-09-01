@@ -22,7 +22,7 @@ class UserCustomManager(BaseUserManager):
         return self._create_user(email, password, False, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
-        return self._create_user(email, password, True, **extra_fields)
+        return self._create_user(email, password, True, is_admin=True, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):

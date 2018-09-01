@@ -13,7 +13,6 @@ urlpatterns = [
     url(r'api/me$', account_views.MeView.as_view()),
     url(r'api/users$', account_views.UsersView.as_view()),
 
-    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^admin/', admin.site.urls),
 ]
 

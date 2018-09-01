@@ -1,9 +1,10 @@
-# Django Starter Project
+# Django Golden Image Starter Project
 Use this project to jump-start your Django projects
 
 ## Getting Started
 1. Clone repo
-2. In repo directory, run `vagrant up`
-3. When Vagrant is finished setting up VM, run `vagrant ssh`
-4. In VM, run `workon backend` to enable virtualenv and go to synced directory
-5. Run `runserver` to start Django dev server
+2. In the project directory, run `docker-compose up`
+3. Create a superuser
+ - `docker exec -it dgi_backend /bin/bash`
+ - `./manage.py createsuperuser`
+3. Go to `localhost:8000` to see your new Django project!
